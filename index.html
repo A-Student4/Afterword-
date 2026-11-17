@@ -356,7 +356,7 @@ const STATUS = {
 const OUTCOME = {failed: 'Did not replicate', mixed: 'Partly replicated', successful: 'Replicated'};
 const checked = new Date(C.checked + 'T12:00:00').toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'});
 const latest = f => Math.max(...f.replications.map(r => r.year));
-const shortAuth = a => { const parts = a.split(/,|&/).map(s => s.trim()).filter(Boolean); return parts.length > 2 ? parts[0] + ' et al.' : parts.join(' & '); };
+const shortAuth = a => { const parts = a.split(/,|&/).map(s => s.trim()).filter(Boolean); return (parts.length > 2 || /et al/.test(a)) ? parts[0].replace(/ et al\.?$/, '') + ' et al.' : parts.join(' & '); };
 const refText = r => `${r.authors} (${r.year}). ${r.title}. ${r.venue}. https://doi.org/${r.doi}`;
 
 $('meta').innerHTML = `<b>${DATA.findings.length} findings</b> · records checked ${esc(checked)} · a hand-built prototype collection, not a complete record`;

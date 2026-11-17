@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" width="1200" height="820" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16181b"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a9097"/></marker>
+    <style>
+      .box{fill:#fff;stroke:#16181b;stroke-width:2}
+      .ai{fill:#eef4f9;stroke:#1d5f8a;stroke-width:2.5}
+      .sim{fill:#fff;stroke:#9a5b00;stroke-width:2;stroke-dasharray:7 5}
+      .plan{fill:#f6f7f8;stroke:#8a9097;stroke-width:1.6;stroke-dasharray:2 4}
+      .t{font-size:15px;font-weight:600;fill:#16181b}
+      .tp{font-size:15px;font-weight:600;fill:#6b7178}
+      .s{font-size:12.5px;fill:#454b52}
+      .p{font-size:12.5px;fill:#6b7178}
+      .lab{font-size:11.5px;fill:#16181b;paint-order:stroke;stroke:#fff;stroke-width:4px}
+      .glab{font-size:11.5px;fill:#6b7178;paint-order:stroke;stroke:#fff;stroke-width:4px}
+      .ln{stroke:#16181b;stroke-width:1.8;fill:none}
+      .gl{stroke:#8a9097;stroke-width:1.6;fill:none;stroke-dasharray:3 4}
+      .zone{fill:none;stroke:#d9dcd8;stroke-width:1.5}
+      .zt{font-size:13px;font-weight:600;fill:#6b7178}
+    </style>
+  </defs>
+  <rect width="1200" height="820" fill="#fff"/>
+  <text x="30" y="38" font-size="22" font-weight="700" fill="#16181b">HoldsUp: system diagram</text>
+  <text x="30" y="60" class="s">Components, information flows and AI behaviour. Everything runs in the browser; there is no server and no model call in the current version.</text>
+
+  <rect x="15" y="85" width="215" height="600" rx="10" class="zone"/><text x="29" y="107" class="zt">Person</text>
+  <rect x="240" y="85" width="245" height="600" rx="10" class="zone"/><text x="254" y="107" class="zt">Interface (index.html)</text>
+  <rect x="495" y="85" width="425" height="600" rx="10" class="zone"/><text x="509" y="107" class="zt">Matching engine (src/search.js)</text>
+  <rect x="935" y="85" width="250" height="600" rx="10" class="zone"/><text x="949" y="107" class="zt">Data and outside sources</text>
+
+  <!-- Person -->
+  <rect x="30" y="125" width="160" height="100" rx="8" class="box"/>
+  <text x="42" y="150" class="t">Student or</text><text x="42" y="169" class="t">researcher</text>
+  <text x="42" y="192" class="s">searches, reads,</text><text x="42" y="208" class="s">decides what to cite</text>
+  <rect x="30" y="470" width="160" height="70" rx="8" class="box"/>
+  <text x="42" y="496" class="t">Their draft</text><text x="42" y="516" class="s">essay or report text</text>
+
+  <!-- Interface -->
+  <rect x="255" y="125" width="215" height="65" rx="8" class="box"/>
+  <text x="267" y="150" class="t">Search box</text><text x="267" y="171" class="s">free text + example chips</text>
+  <rect x="255" y="215" width="215" height="140" rx="8" class="box"/>
+  <text x="267" y="239" class="t">Response views</text>
+  <text x="267" y="260" class="s">• record card: verdict badge,</text><text x="277" y="275" class="s">dated timeline, evidence, why</text>
+  <text x="267" y="295" class="s">• clarify: "which one?"</text>
+  <text x="267" y="314" class="s">• decline: "not covered here"</text>
+  <text x="267" y="333" class="s">• weak: "no close match"</text>
+  <rect x="255" y="380" width="215" height="62" rx="8" class="box"/>
+  <text x="267" y="405" class="t">Citation nudge</text><text x="267" y="425" class="s">copy original + replication?</text>
+  <rect x="255" y="470" width="215" height="70" rx="8" class="box"/>
+  <text x="267" y="495" class="t">Draft checker view</text><text x="267" y="515" class="s">flagged and unchecked</text><text x="267" y="530" class="s">sentences</text>
+  <rect x="255" y="600" width="215" height="62" rx="8" class="sim"/>
+  <text x="267" y="625" class="t">Report a problem</text><text x="267" y="645" class="s">composes report to copy</text>
+
+  <!-- Engine -->
+  <rect x="510" y="125" width="160" height="85" rx="8" class="ai"/>
+  <text x="522" y="149" class="t">Query processing</text>
+  <text x="522" y="169" class="s">normalise, stem,</text><text x="522" y="184" class="s">drop filler words,</text><text x="522" y="199" class="s">correct typos</text>
+  <rect x="740" y="125" width="170" height="85" rx="8" class="ai"/>
+  <text x="752" y="149" class="t">Retriever</text>
+  <text x="752" y="169" class="s">field-weighted BM25</text><text x="752" y="184" class="s">over name, aliases,</text><text x="752" y="199" class="s">keywords, claim</text>
+  <rect x="740" y="235" width="170" height="102" rx="8" class="ai"/>
+  <text x="752" y="259" class="t">Match strength</text>
+  <text x="752" y="279" class="s">share of query matched</text>
+  <text x="752" y="295" class="s">strong ≥ 0.6 · weak ≥ 0.3</text>
+  <text x="752" y="312" class="s">→ strong, ambiguous,</text><text x="752" y="328" class="s">weak or none</text>
+  <rect x="510" y="245" width="160" height="62" rx="8" class="box"/>
+  <text x="522" y="270" class="t">Text composer</text><text x="522" y="290" class="s">fills text from record</text>
+  <rect x="740" y="380" width="170" height="62" rx="8" class="plan"/>
+  <text x="752" y="405" class="tp">Dense retrieval</text><text x="752" y="425" class="p">embeddings beside BM25</text>
+  <rect x="510" y="470" width="160" height="80" rx="8" class="ai"/>
+  <text x="522" y="494" class="t">Mention detector</text>
+  <text x="522" y="514" class="s">names, aliases and</text><text x="522" y="530" class="s">author + year</text>
+  <rect x="740" y="470" width="170" height="80" rx="8" class="plan"/>
+  <text x="752" y="494" class="tp">LLM claim finder</text>
+  <text x="752" y="514" class="p">paraphrased claims,</text><text x="752" y="530" class="p">checked against records</text>
+
+  <!-- Data -->
+  <rect x="950" y="125" width="220" height="130" rx="8" class="box"/>
+  <text x="962" y="150" class="t">Findings collection</text>
+  <text x="962" y="170" class="s">data/findings.json · 21 findings</text>
+  <text x="962" y="188" class="s">original + replications, outcome,</text>
+  <text x="962" y="205" class="s">summary, DOI + checked flag,</text>
+  <text x="962" y="222" class="s">date checked</text>
+  <text x="962" y="242" class="s">hand-curated, web-verified</text>
+  <rect x="950" y="285" width="220" height="65" rx="8" class="plan"/>
+  <text x="962" y="310" class="tp">FLoRA connector</text><text x="962" y="330" class="p">sync 4,400+ records</text>
+  <rect x="950" y="380" width="220" height="62" rx="8" class="box"/>
+  <text x="962" y="405" class="t">Fixed test cases</text><text x="962" y="425" class="s">26 cases · tests/run-cases.js</text>
+  <rect x="950" y="480" width="220" height="62" rx="8" class="box"/>
+  <text x="962" y="505" class="t">FLoRA Replication Atlas</text><text x="962" y="525" class="s">external site, linked</text>
+  <rect x="950" y="600" width="220" height="62" rx="8" class="plan"/>
+  <text x="962" y="625" class="tp">Issue tracker</text><text x="962" y="645" class="p">receives problem reports</text>
+
+  <!-- Search flow -->
+  <path class="ln" marker-end="url(#a)" d="M190 158 H255"/><text x="200" y="150" class="lab">query</text>
+  <path class="ln" marker-end="url(#a)" d="M470 158 H510"/>
+  <path class="ln" marker-end="url(#a)" d="M670 168 H740"/><text x="684" y="160" class="lab">tokens</text>
+  <path class="ln" marker-end="url(#a)" d="M950 168 H910"/><text x="913" y="160" class="lab">index</text>
+  <path class="ln" marker-end="url(#a)" d="M825 210 V235"/><text x="832" y="227" class="lab">scores</text>
+  <path class="ln" marker-end="url(#a)" d="M740 276 H670"/><text x="678" y="268" class="lab">verdict</text>
+  <path class="ln" marker-end="url(#a)" d="M510 276 H470"/><text x="476" y="268" class="lab">view</text>
+  <path class="ln" marker-end="url(#a)" d="M255 300 H150 V225"/><text x="160" y="292" class="lab">reads</text>
+  <path class="ln" marker-end="url(#a)" d="M60 225 V411 H255"/><text x="72" y="403" class="lab">copies, chooses</text>
+  <path class="ln" marker-end="url(#a)" d="M470 348 H928 V511 H950"/><text x="700" y="366" class="lab">hand-over link when not covered</text>
+
+  <!-- Draft flow -->
+  <path class="ln" marker-end="url(#a)" d="M190 505 H255"/><text x="200" y="497" class="lab">paste</text>
+  <path class="ln" marker-end="url(#a)" d="M470 490 H510"/>
+  <path class="ln" marker-end="url(#a)" d="M510 530 H470"/><text x="476" y="547" class="lab">flags</text>
+
+  <!-- Planned / simulated flows -->
+  <path class="gl" marker-end="url(#g)" d="M740 510 H670"/><text x="678" y="502" class="glab">planned</text>
+  <path class="gl" marker-end="url(#g)" d="M1060 285 V255"/><text x="1068" y="275" class="glab">updates</text>
+  <path class="gl" marker-end="url(#g)" d="M470 631 H950"/><text x="700" y="623" class="glab">report (planned; copied by hand today)</text>
+  <path class="ln" marker-end="url(#a)" d="M30 200 H22 V631 H255"/><text x="40" y="623" class="lab">corrects a record</text>
+
+  <!-- Legend -->
+  <rect x="15" y="700" width="1170" height="105" rx="10" fill="#f6f7f8"/>
+  <rect x="35" y="720" width="34" height="22" rx="4" class="box"/><text x="77" y="736" class="s">Implemented</text>
+  <rect x="185" y="720" width="34" height="22" rx="4" class="ai"/><text x="227" y="736" class="s">Implemented AI behaviour (retrieval, ranking, thresholding, matching)</text>
+  <rect x="660" y="720" width="34" height="22" rx="4" class="sim"/><text x="702" y="736" class="s">Simulated (works, nothing is sent)</text>
+  <rect x="950" y="720" width="34" height="22" rx="4" class="plan"/><text x="992" y="736" class="s">Planned</text>
+  <text x="35" y="770" class="s">No component generates the verdict a user reads: every badge and sentence is filled from the stored record, so a wording error cannot change a finding's status.</text>
+  <text x="35" y="790" class="s">Match strength is the system's signal-detection criterion: lowering 0.6 / 0.3 shows more results and more wrong ones.</text>
+</svg>
