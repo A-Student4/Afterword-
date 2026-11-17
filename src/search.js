@@ -23,7 +23,8 @@
     'which who why will with you your about after again also any because before being between both ' +
     'could during each few further here just less many much other over own same should so some ' +
     'such through too under until up very would study studies effect effects finding findings ' +
-    'research psychology show shows showed shown').split(' '));
+    'research psychology show shows showed shown get gets got use used really actually true ' +
+    'real work works does').split(' '));
 
   function stem(t) {
     if (t.length > 5 && t.endsWith('ing')) return t.slice(0, -3);
@@ -146,9 +147,14 @@
       const strength = (phraseHit || coverage >= criterion.strong) ? 'strong' : coverage >= criterion.weak ? 'weak' : 'below';
       results.push({ finding: d.finding, score, coverage, strength, matched, phraseHit });
     }
-    results.sort((a, b) => b.score - a.score);
+    const rank = { strong: 0, weak: 1, below: 2 };
+    results.sort((a, b) => rank[a.strength] - rank[b.strength] || b.score - a.score);
     const kept = results.filter(r => r.strength !== 'below');
-    const verdict = kept.some(r => r.strength === 'strong') ? 'strong' : kept.length ? 'weak' : 'none';
+    const strong = kept.filter(r => r.strength === 'strong');
+    let verdict = strong.length ? 'strong' : kept.length ? 'weak' : 'none';
+    // Ambiguous: several findings match equally well (e.g. "priming"). The interface
+    // should ask which one, not pretend the first is the answer (L07 clarify turn).
+    if (strong.length >= 3 && strong[0].score < 1.3 * strong[2].score) verdict = 'ambiguous';
     const corrections = resolved.filter(r => r.fuzzy).map(r => ({ from: r.query, to: r.match }));
     const unknown = resolved.filter(r => !r.match).map(r => r.query);
     return { query, tokens: qTokens, results: kept, below: results.filter(r => r.strength === 'below'), verdict, criterion, corrections, unknown };
@@ -157,10 +163,13 @@
   // Draft checking: find sentences that name a finding (name or alias phrase)
   // or cite its original paper (first author + year).
   function splitSentences(text) {
-    return String(text || '')
+    // Protect abbreviations common in academic prose so "et al. (1998)" stays in one sentence.
+    const protectedText = String(text || '')
       .replace(/\s+/g, ' ')
+      .replace(/\b(et al|e\.g|i\.e|cf|vs|approx|Fig|No)\./g, (m, a) => a + '\u2024');
+    return protectedText
       .split(/(?<=[.!?])\s+(?=[A-Z("'])/)
-      .map(s => s.trim())
+      .map(s => s.replace(/\u2024/g, '.').trim())
       .filter(Boolean);
   }
 

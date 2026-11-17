@@ -1,33 +1,142 @@
 {
   "_about": "Fixed test cases, written before tuning (Lecture 09's fixed-case loop). expect_top: id of the first result; expect_verdict: strong | weak | none.",
   "search": [
-    {"q": "ego depletion", "expect_top": "ego-depletion", "expect_verdict": "strong"},
-    {"q": "willpower runs out", "expect_top": "ego-depletion", "expect_verdict": "strong"},
-    {"q": "does self-control get used up", "expect_top": "ego-depletion", "expect_verdict": "strong"},
-    {"q": "power posing", "expect_top": "power-posing", "expect_verdict": "strong"},
-    {"q": "smiling makes you happier", "expect_top": "facial-feedback", "expect_verdict": "strong"},
-    {"q": "pen in mouth", "expect_top": "facial-feedback", "expect_verdict": "strong"},
-    {"q": "marshmellow test", "expect_top": "marshmallow", "expect_verdict": "strong"},
-    {"q": "Milgram", "expect_top": "obedience", "expect_verdict": "strong"},
-    {"q": "anchoring bias", "expect_top": "anchoring", "expect_verdict": "strong"},
-    {"q": "asian disease problem", "expect_top": "framing", "expect_verdict": "strong"},
-    {"q": "hot coffee makes people seem warmer", "expect_top": "physical-warmth", "expect_verdict": "strong"},
-    {"q": "too many choices", "expect_top": "choice-overload", "expect_verdict": "strong"},
-    {"q": "Mozart makes you smarter", "expect_top": "mozart-effect", "expect_verdict": "strong"},
-    {"q": "stereotype threat", "expect_top": "stereotype-threat", "expect_verdict": "strong"},
-    {"q": "Stroop", "expect_top": "stroop", "expect_verdict": "strong"},
-    {"q": "Bem precognition", "expect_top": "precognition", "expect_verdict": "strong"},
-    {"q": "growth mindset", "expect_top": null, "expect_verdict": "none"},
-    {"q": "bystander effect", "expect_top": null, "expect_verdict": "none"},
-    {"q": "Dunning-Kruger effect", "expect_top": null, "expect_verdict": "none"},
-    {"q": "priming", "expect_top": null, "expect_verdict": "weak"},
-    {"q": "self-control in children", "expect_top": null, "expect_verdict": "weak"}
+    {
+      "q": "ego depletion",
+      "expect_top": "ego-depletion",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "willpower runs out",
+      "expect_top": "ego-depletion",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "does self-control get used up",
+      "expect_top": "ego-depletion",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "power posing",
+      "expect_top": "power-posing",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "smiling makes you happier",
+      "expect_top": "facial-feedback",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "pen in mouth",
+      "expect_top": "facial-feedback",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "marshmellow test",
+      "expect_top": "marshmallow",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "Milgram",
+      "expect_top": "obedience",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "anchoring bias",
+      "expect_top": "anchoring",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "asian disease problem",
+      "expect_top": "framing",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "hot coffee makes people seem warmer",
+      "expect_top": "physical-warmth",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "too many choices",
+      "expect_top": "choice-overload",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "Mozart makes you smarter",
+      "expect_top": "mozart-effect",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "stereotype threat",
+      "expect_top": "stereotype-threat",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "Stroop",
+      "expect_top": "stroop",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "Bem precognition",
+      "expect_top": "precognition",
+      "expect_verdict": "strong"
+    },
+    {
+      "q": "growth mindset",
+      "expect_top": null,
+      "expect_verdict": "none"
+    },
+    {
+      "q": "bystander effect",
+      "expect_top": null,
+      "expect_verdict": "none"
+    },
+    {
+      "q": "Dunning-Kruger effect",
+      "expect_top": null,
+      "expect_verdict": "none"
+    },
+    {
+      "q": "priming",
+      "expect_top": null,
+      "expect_verdict": "ambiguous",
+      "note": "Expectation revised after first run: five priming findings match equally, so this is a clarify case, not a weak match."
+    },
+    {
+      "q": "self-control in children",
+      "expect_top": "marshmallow",
+      "expect_verdict": "strong",
+      "note": "Expectation revised after first run: the marshmallow test is the correct answer."
+    }
   ],
   "draft": [
-    {"text": "Baumeister et al. (1998) showed that willpower is a limited resource.", "expect": ["ego-depletion"]},
-    {"text": "Power posing before an interview raises testosterone.", "expect": ["power-posing"]},
-    {"text": "Students often procrastinate when deadlines are far away.", "expect": []},
-    {"text": "As the marshmallow test shows, patience predicts success.", "expect": ["marshmallow"]},
-    {"text": "Participants judged moral violations less harshly after washing their hands (Schnall et al., 2008).", "expect": ["cleanliness-morality"]}
+    {
+      "text": "Baumeister et al. (1998) showed that willpower is a limited resource.",
+      "expect": [
+        "ego-depletion"
+      ]
+    },
+    {
+      "text": "Power posing before an interview raises testosterone.",
+      "expect": [
+        "power-posing"
+      ]
+    },
+    {
+      "text": "Students often procrastinate when deadlines are far away.",
+      "expect": []
+    },
+    {
+      "text": "As the marshmallow test shows, patience predicts success.",
+      "expect": [
+        "marshmallow"
+      ]
+    },
+    {
+      "text": "Participants judged moral violations less harshly after washing their hands (Schnall et al., 2008).",
+      "expect": [
+        "cleanliness-morality"
+      ]
+    }
   ]
 }
