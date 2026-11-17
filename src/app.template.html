@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HoldsUp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a careful librarian's catalogue - calm, exact, never alarmist.
+   IDEA: each finding is a catalogue card that carries the field's later verdict, dated.
+   PICTURE: the record card with its evidence timeline (original -> each replication).
+   COLOUR and TYPE: paper white and ink; red, ochre and blue for the three verdicts; Source Serif 4 + Inter.
+   LAYOUT: modest title, the search tool on top, cards in one reading column. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#121417);--panel:light-dark(#f4f5f2,#1b1e22);--ink:light-dark(#16181b,#e9eaec);
+--muted:light-dark(#5b6168,#a2a8b0);--rule:light-dark(#d9dcd8,#2f343a);
+--fail:light-dark(#b3122e,#ff6b7f);--mixed:light-dark(#9a5b00,#f0b252);--ok:light-dark(#1d5f8a,#7cc0f0);
+--focus:light-dark(#1d5f8a,#7cc0f0)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:clip}
+.wrap{max-width:860px;margin:0 auto;padding:clamp(20px,4vw,44px) max(4vw,16px) 64px}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;font-weight:650;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,44px)}h2{font-size:24px}h3{font-size:21px}
+.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.meta{font-size:14px;color:var(--muted);margin-top:10px}
+.meta b{color:var(--ink);font-weight:600}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin:26px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-weight:500;background:none;border:0;padding:10px 14px;min-height:44px;color:var(--muted);cursor:pointer;border-radius:6px 6px 0 0}
+nav button[aria-selected=true]{background:var(--ink);color:var(--bg)}
+button,input,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.searchrow{display:flex;gap:8px;margin-top:22px}
+.searchrow input{flex:1;font-size:18px;padding:12px 14px;min-height:50px;border:2px solid var(--ink);border-radius:8px;background:var(--bg);color:var(--ink)}
+.btn{min-height:44px;padding:8px 16px;border-radius:8px;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.small{min-height:36px;padding:4px 12px;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:14px;color:var(--muted);align-items:center}
+.link{background:none;border:0;padding:6px 0;min-height:36px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:left;font-weight:500}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.chip{border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;font-size:14px}
+.notice{margin-top:22px;padding:16px 18px;border-left:4px solid var(--ink);background:var(--panel);border-radius:0 8px 8px 0}
+.notice h3{font-size:19px;margin-bottom:6px}.notice p{margin:6px 0}
+.notice .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.note{font-size:14px;color:var(--muted);margin-top:14px}
+.card{margin-top:18px;border:1px solid var(--rule);border-radius:10px;padding:18px 20px;background:var(--bg)}
+.card.weak{border-style:dashed}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.claim{margin:6px 0 0;color:var(--ink)}
+.stamp{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;padding:4px 10px;border:2px solid currentColor;border-radius:6px;white-space:nowrap}
+.s-not_replicated,.o-failed{color:var(--fail)}.s-mixed,.o-mixed{color:var(--mixed)}.s-replicated,.o-successful{color:var(--ok)}
+.verdict{margin:12px 0 0;font-size:15px}
+.tl{position:relative;height:46px;margin:16px 6px 4px}
+.tl .axis{position:absolute;left:0;right:0;top:12px;height:2px;background:var(--rule)}
+.tl .dot{position:absolute;top:5px;width:16px;height:16px;margin-left:-8px;border-radius:50%;border:3px solid currentColor;background:var(--bg)}
+.tl .dot.orig{color:var(--ink);background:var(--ink)}
+.tl .yr{position:absolute;top:26px;font-size:12px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.tl .yr.end{transform:translateX(-100%)}.tl .yr.start{transform:none}
+.why{font-size:13px;color:var(--muted);margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.meter{width:90px;height:6px;background:var(--rule);border-radius:3px;overflow:hidden}.meter i{display:block;height:100%;background:var(--ink)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+details.ev{margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+details.ev summary{cursor:pointer;font-weight:600;min-height:32px}
+.ref{margin:12px 0 0;font-size:15px}
+.ref .o{font-weight:600}.ref .doi{font-size:13px;word-break:break-all}
+.flag{font-size:12px;border:1px solid var(--rule);border-radius:4px;padding:0 5px;color:var(--muted);margin-left:4px}
+.contested{margin-top:10px;font-size:14px;padding:8px 10px;background:var(--panel);border-radius:6px}
+.inline{margin-top:12px;padding:12px 14px;background:var(--panel);border-radius:8px;font-size:15px}
+.inline p{margin:0 0 8px}
+textarea{width:100%;min-height:150px;padding:12px;border:2px solid var(--ink);border-radius:8px;background:var(--bg);color:var(--ink);font-size:16px;margin-top:18px}
+.sent{margin-top:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--rule)}
+.sent.hit{border-left:5px solid var(--ink)}
+.sent .hl{font-size:14px;margin-top:6px}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:600}
+td.num{text-align:right;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+@media(max-width:600px){.searchrow{flex-direction:column}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>HoldsUp</h1>
+    <p class="sub">Look up a psychology finding by name or description and see whether later, larger studies found the same thing, before you cite it.</p>
+    <p class="meta" id="meta"></p>
+  </header>
+  <nav role="tablist" aria-label="Views">
+    <button role="tab" id="tab-search" aria-selected="true" data-view="search">Search a finding</button>
+    <button role="tab" id="tab-draft" aria-selected="false" data-view="draft">Check a draft</button>
+    <button role="tab" id="tab-collection" aria-selected="false" data-view="collection">What's in the collection</button>
+  </nav>
+
+  <section id="view-search">
+    <form class="searchrow" id="form" role="search">
+      <label for="q" class="sr">Search for a finding</label>
+      <input id="q" autocomplete="off" placeholder="e.g. willpower runs out, power posing, pen in mouth">
+      <button class="btn" type="submit">Search</button>
+    </form>
+    <div class="chips" id="examples">Try:</div>
+    <div id="results" aria-live="polite"></div>
+    <details class="note"><summary>How HoldsUp decides what counts as a match</summary>
+      <p>Each finding is scored on how much of your search it explains, weighting rare words more than common ones. A match is <b>strong</b> when it covers at least <span id="c-strong"></span>% of your search or contains a known name for the finding, and <b>weak</b> from <span id="c-weak"></span>%. Below that, HoldsUp says it found nothing rather than showing a poor guess. Lowering these thresholds would show more results but more wrong ones.</p>
+    </details>
+  </section>
+
+  <section id="view-draft" hidden>
+    <p class="note" style="margin-top:20px">Paste a paragraph from an essay or report. HoldsUp marks sentences that name or cite a finding in its collection. It does not judge sentences it does not recognise.</p>
+    <label for="draft" class="sr">Draft text</label>
+    <textarea id="draft"></textarea>
+    <div class="acts"><button class="btn" id="check">Check draft</button><button class="btn ghost" id="clear">Clear</button></div>
+    <p class="note" id="draft-sample-note">The text above is a sample paragraph written for this prototype.</p>
+    <div id="draft-out" aria-live="polite"></div>
+  </section>
+
+  <section id="view-collection" hidden>
+    <p class="note" style="margin-top:20px" id="scope"></p>
+    <div class="chips" id="filters"></div>
+    <table class="stack"><thead><tr><th>Finding</th><th>Status</th><th>Original</th><th>Latest evidence</th></tr></thead><tbody id="rows"></tbody></table>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>/*__DATA__*/</script>
+<script>/*__SEARCH__*/</script>
+<script>
+{
+const DATA = window.HOLDSUP_DATA;
+const S = window.HoldsUpSearch;
+const index = S.buildIndex(DATA.findings);
+const C = DATA.collection;
+const byId = Object.fromEntries(DATA.findings.map(f => [f.id, f]));
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STATUS = {
+  not_replicated: {label: 'Did not replicate', icon: '✕'},
+  mixed: {label: 'Mixed evidence', icon: '≈'},
+  replicated: {label: 'Replicated', icon: '✓'}
+};
+const OUTCOME = {failed: 'Did not replicate', mixed: 'Partly replicated', successful: 'Replicated'};
+const checked = new Date(C.checked + 'T12:00:00').toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'});
+const latest = f => Math.max(...f.replications.map(r => r.year));
+const shortAuth = a => { const parts = a.split(/,|&/).map(s => s.trim()).filter(Boolean); return parts.length > 2 ? parts[0] + ' et al.' : parts.join(' & '); };
+const refText = r => `${r.authors} (${r.year}). ${r.title}. ${r.venue}. https://doi.org/${r.doi}`;
+
+$('meta').innerHTML = `<b>${DATA.findings.length} findings</b> · records checked ${esc(checked)} · a hand-built prototype collection, not a complete record`;
+$('c-strong').textContent = S.CRITERION.strong * 100;
+$('c-weak').textContent = S.CRITERION.weak * 100;
+
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('on'), 2200); }
+async function copy(text, msg) {
+  try { await navigator.clipboard.writeText(text); toast(msg); }
+  catch (e) { showFallback(text); }
+}
+function showFallback(text) {
+  const box = document.createElement('div');
+  box.className = 'inline';
+  box.innerHTML = `<p>Copying is blocked here. Select the text below and copy it yourself.</p><textarea readonly style="min-height:90px;margin-top:0">${esc(text)}</textarea>`;
+  document.activeElement?.closest('.card, .sent, section')?.appendChild(box);
+}
+
+function stamp(status) { const s = STATUS[status]; return `<span class="stamp s-${status}"><span aria-hidden="true">${s.icon}</span>${s.label}</span>`; }
+
+function timeline(f) {
+  const y0 = f.original.year, y1 = Math.max(2026, latest(f));
+  const pos = y => ((y - y0) / (y1 - y0)) * 100;
+  const dots = f.replications.map(r => `<span class="dot o-${r.outcome}" style="left:${pos(r.year)}%" title="${esc(r.year + ': ' + OUTCOME[r.outcome])}"></span>`).join('');
+  const years = [...new Set(f.replications.map(r => r.year))].sort((a, b) => a - b);
+  const shownYears = []; let lastPos = 12;
+  for (const y of years) if (pos(y) - lastPos >= 11) { shownYears.push(y); lastPos = pos(y); }
+  if (!shownYears.includes(years[years.length - 1])) { shownYears.pop(); shownYears.push(years[years.length - 1]); }
+  const todayLabel = 100 - lastPos >= 16 ? `<span class="yr end" style="left:100%">today</span>` : '';
+  return `<div class="tl" aria-label="Evidence timeline: original ${y0}, ${f.replications.map(r => r.year + ' ' + OUTCOME[r.outcome].toLowerCase()).join(', ')}">
+    <span class="axis"></span><span class="dot orig" style="left:0%" title="Original ${y0}"></span>${dots}
+    <span class="yr start" style="left:0%">${y0} original</span>
+    ${shownYears.map(y => `<span class="yr ${pos(y) > 88 ? 'end' : ''}" style="left:${pos(y)}%">${y}</span>`).join('')}${todayLabel}</div>`;
+}
+
+function refHtml(r, isOrig) {
+  const tag = isOrig ? '<span class="o">Original</span>' : `<span class="o o-${r.outcome}">${OUTCOME[r.outcome]}</span>`;
+  const flag = r.doi_checked ? '' : '<span class="flag" title="This DOI has not yet been checked against the publisher record">DOI not yet checked</span>';
+  return `<p class="ref">${tag} · ${esc(r.authors)} (${r.year}). <i>${esc(r.title)}</i>. ${esc(r.venue)}.${r.summary ? '<br>' + esc(r.summary) : ''}<br><a class="doi" href="https://doi.org/${esc(r.doi)}" target="_blank" rel="noopener">doi.org/${esc(r.doi)}</a>${flag}</p>`;
+}
+
+function card(f, m) {
+  const why = m ? `<div class="why"><span>Match: ${m.strength}</span><span class="meter" aria-hidden="true"><i style="width:${Math.round(m.coverage * 100)}%"></i></span><span>matched ${m.matched.map(esc).join(', ')}${m.phraseHit ? ' (a known name for this finding)' : ''}</span></div>` : '';
+  return `<article class="card ${m && m.strength === 'weak' ? 'weak' : ''}" data-id="${f.id}">
+    <div class="top"><h2>${esc(f.name)}</h2>${stamp(f.status)}</div>
+    <p class="claim">${esc(f.claim)}</p>
+    <p class="verdict">${esc(f.status_note)}</p>
+    ${timeline(f)}
+    <p class="note" style="margin-top:2px">Original: ${esc(shortAuth(f.original.authors))} (${f.original.year}) · latest evidence here: ${latest(f)} · record checked ${esc(checked)}</p>
+    ${why}
+    <details class="ev"><summary>Show the evidence (${f.replications.length + 1} papers)</summary>
+      ${refHtml(f.original, true)}${f.replications.map(r => refHtml(r, false)).join('')}
+      ${f.contested ? `<p class="contested"><b>Disputed:</b> ${esc(f.contested)}</p>` : ''}
+    </details>
+    <div class="acts"><button class="btn small" data-act="copy">Copy reference</button><button class="btn small ghost" data-act="report">Report a problem</button></div>
+    <div class="slot"></div>
+  </article>`;
+}
+
+function declinePanel(r) {
+  const words = r.unknown.length ? `<p>No finding here uses the words: <b>${r.unknown.map(esc).join(', ')}</b>.</p>` : '';
+  return `<div class="notice" role="status"><h3>Nothing in this collection matches “${esc(r.query)}”.</h3>
+    <p>HoldsUp holds ${DATA.findings.length} findings, last checked ${esc(checked)}. A missing result means this collection doesn't cover the finding. It does not tell you whether the finding has been tested, or whether it held up.</p>${words}
+    <div class="acts"><a class="btn" href="${esc(C.external_source.url)}" target="_blank" rel="noopener">Search the FLoRA Replication Atlas</a><button class="btn ghost" data-go="collection">See the ${DATA.findings.length} findings covered</button></div></div>
+    ${r.below.length ? `<p class="note">Closest, but below the match threshold: ${r.below.slice(0, 3).map(b => `<button class="chip" data-open="${b.finding.id}">${esc(b.finding.name)}</button>`).join(' ')}</p>` : ''}`;
+}
+
+function runSearch(q) {
+  const out = $('results');
+  const r = S.search(index, q);
+  if (r.verdict === 'empty') { out.innerHTML = ''; return; }
+  let html = '';
+  if (r.corrections.length) html += `<p class="note">Showing results for <b>${esc(r.corrections.map(c => c.to).join(', '))}</b>. You typed “${esc(r.corrections.map(c => c.from).join(', '))}”.</p>`;
+  if (r.verdict === 'none') { out.innerHTML = html + declinePanel(r); return; }
+  if (r.verdict === 'ambiguous') {
+    const strong = r.results.filter(x => x.strength === 'strong');
+    html += `<div class="notice" role="status"><h3>${strong.length} findings match “${esc(q)}” about equally. Which one do you mean?</h3>
+      <div class="acts">${strong.map(x => `<button class="chip" data-open="${x.finding.id}">${STATUS[x.finding.status].icon} ${esc(x.finding.name)}</button>`).join('')}</div>
+      <p class="note">${(n => n === strong.length ? `None of these ${n} replicated cleanly.` : `${n} of these ${strong.length} did not replicate cleanly.`)(strong.filter(x => x.finding.status !== 'replicated').length)}</p></div>`;
+    out.innerHTML = html; return;
+  }
+  if (r.verdict === 'weak') html += `<div class="notice" role="status"><h3>No close match for “${esc(q)}”.</h3><p>These findings share only some of your words, so they may not be what you meant. If none fits, this collection probably doesn't cover it.</p><div class="acts"><a class="btn ghost" href="${esc(C.external_source.url)}" target="_blank" rel="noopener">Search the FLoRA Replication Atlas</a></div></div>`;
+  const strong = r.results.filter(x => x.strength === 'strong');
+  const weak = r.results.filter(x => x.strength === 'weak');
+  html += strong.map(x => card(x.finding, x)).join('');
+  if (r.verdict === 'strong' && weak.length) html += `<details class="note"><summary>${weak.length} weaker match${weak.length > 1 ? 'es' : ''}</summary>${weak.map(x => card(x.finding, x)).join('')}</details>`;
+  else html += weak.map(x => card(x.finding, x)).join('');
+  out.innerHTML = html;
+}
+
+function openFinding(id) { const f = byId[id]; $('results').innerHTML = card(f, null); }
+
+// Citation nudge: copying a contested finding asks once, inline, and never blocks.
+function onCardAction(cardEl, act) {
+  const f = byId[cardEl.dataset.id];
+  const slot = cardEl.querySelector('.slot');
+  if (act === 'copy') {
+    if (f.status === 'replicated') return copy(refText(f.original), 'Reference copied');
+    const rep = f.replications[f.replications.length - 1];
+    slot.innerHTML = `<div class="inline"><p><b>This finding has a replication record.</b> Readers of your work may want to see it too. What should HoldsUp copy?</p>
+      <div class="acts" style="margin-top:4px"><button class="btn small" data-act="copy-both">Original + ${esc(shortAuth(rep.authors))} (${rep.year})</button><button class="btn small ghost" data-act="copy-orig">Original only</button><button class="btn small ghost" data-act="close">Cancel</button></div></div>`;
+  } else if (act === 'copy-both') {
+    const rep = f.replications[f.replications.length - 1];
+    copy(refText(f.original) + '\n' + refText(rep), 'Both references copied'); slot.innerHTML = '';
+  } else if (act === 'copy-orig') { copy(refText(f.original), 'Original reference copied'); slot.innerHTML = ''; }
+  else if (act === 'close') slot.innerHTML = '';
+  else if (act === 'report') {
+    slot.innerHTML = `<div class="inline"><p><b>Report a problem with this record</b></p><label for="rp-${f.id}" class="sr">What looks wrong?</label>
+      <textarea id="rp-${f.id}" style="min-height:80px;margin-top:0" placeholder="What looks wrong? e.g. a newer replication exists, or the status is too strong"></textarea>
+      <div class="acts"><button class="btn small" data-act="send">Copy report</button><button class="btn small ghost" data-act="close">Cancel</button></div>
+      <p class="note">Reports are not sent anywhere yet (planned). Copy the report and paste it into the project's issue tracker.</p></div>`;
+  } else if (act === 'send') {
+    const txt = slot.querySelector('textarea').value.trim();
+    copy(`HoldsUp record: ${f.id} (checked ${C.checked})\n${txt || '(no description)'}`, 'Report copied'); slot.innerHTML = '';
+  }
+}
+
+function runDraft() {
+  const r = S.checkDraft(index, $('draft').value);
+  if (!r.sentences.length) { $('draft-out').innerHTML = ''; return; }
+  const head = `<div class="notice" role="status"><h3>${r.flagged} of ${r.sentences.length} sentences mention a finding in this collection.</h3>
+    <p>The other ${r.unmatched} were not checked against anything. That is not a sign they are well supported: HoldsUp only knows ${DATA.findings.length} findings.</p></div>`;
+  const body = r.sentences.map(s => {
+    if (!s.hits.length) return `<div class="sent"><span class="note" style="margin:0">Not recognised · </span>${esc(s.sentence)}</div>`;
+    return `<div class="sent hit">${esc(s.sentence)}${s.hits.map(h => `<div class="hl">${stamp(h.finding.status)} <b>${esc(h.finding.name)}</b>: this sentence ${h.how === 'cites' ? 'cites' : 'names'} “${esc(h.evidence)}”. ${esc(h.finding.status_note)} <button class="chip" data-open="${h.finding.id}" data-go="search">Open record</button></div>`).join('')}</div>`;
+  }).join('');
+  $('draft-out').innerHTML = head + body;
+}
+
+let filter = 'all';
+function renderCollection() {
+  $('scope').textContent = `${C.scope} Records checked ${checked}. For anything not listed, use the FLoRA Replication Atlas.`;
+  const counts = {all: DATA.findings.length};
+  DATA.findings.forEach(f => counts[f.status] = (counts[f.status] || 0) + 1);
+  $('filters').innerHTML = ['all', 'not_replicated', 'mixed', 'replicated'].map(k => `<button class="chip" aria-pressed="${filter === k}" data-filter="${k}">${k === 'all' ? 'All' : STATUS[k].label} (${counts[k] || 0})</button>`).join('');
+  $('rows').innerHTML = DATA.findings.filter(f => filter === 'all' || f.status === filter)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(f => `<tr><td><button class="link" data-open="${f.id}" data-go="search">${esc(f.name)}</button></td><td>${stamp(f.status)}</td><td>${esc(shortAuth(f.original.authors))} ${f.original.year}</td><td class="num">${latest(f)}</td></tr>`).join('');
+}
+
+function show(view) {
+  for (const v of ['search', 'draft', 'collection']) {
+    $('view-' + v).hidden = v !== view;
+    $('tab-' + v).setAttribute('aria-selected', String(v === view));
+  }
+  if (view === 'collection') renderCollection();
+}
+
+const EXAMPLES = ['willpower runs out', 'power posing', 'priming', 'marshmellow test', 'growth mindset'];
+$('examples').innerHTML = 'Try: ' + EXAMPLES.map(e => `<button class="chip" data-q="${esc(e)}">${esc(e)}</button>`).join('');
+$('draft').value = 'Self-control works like a muscle that tires with use. Baumeister et al. (1998) showed that people who resisted chocolate gave up sooner on a later puzzle. Simple tricks can help too: power posing before an interview raises testosterone and confidence. Students also tend to procrastinate when deadlines are far away.';
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('button, a');
+  if (!t) return;
+  if (t.dataset.view) show(t.dataset.view);
+  if (t.dataset.q) { $('q').value = t.dataset.q; runSearch(t.dataset.q); }
+  if (t.dataset.go) show(t.dataset.go);
+  if (t.dataset.open) { show('search'); openFinding(t.dataset.open); $('q').value = byId[t.dataset.open].name; }
+  if (t.dataset.filter) { filter = t.dataset.filter; renderCollection(); }
+  if (t.dataset.act) { const c = t.closest('.card'); if (c) onCardAction(c, t.dataset.act); }
+});
+$('form').addEventListener('submit', e => { e.preventDefault(); runSearch($('q').value); });
+$('check').addEventListener('click', () => { $('draft-sample-note').hidden = true; runDraft(); });
+$('clear').addEventListener('click', () => { $('draft').value = ''; $('draft-out').innerHTML = ''; $('draft-sample-note').hidden = true; $('draft').focus(); });
+
+$('q').value = 'willpower runs out';
+runSearch($('q').value);
+}
+</script>
+</body>
+</html>

@@ -87,8 +87,10 @@
           length += w;
         }
       }
-      const phrases = [f.name, ...(f.aliases || [])].map(p => tokenize(p).join(' ')).filter(Boolean);
-      return { finding: f, tf, length, phrases };
+      const phraseText = [f.name, ...(f.aliases || [])];
+      const phrases = phraseText.map(p => tokenize(p).join(' ')).filter(Boolean);
+      const phraseOf = Object.fromEntries(phraseText.map(p => [tokenize(p).join(' '), p]));
+      return { finding: f, tf, length, phrases, phraseOf };
     });
     const df = new Map();
     for (const d of docs) for (const tok of d.tf.keys()) df.set(tok, (df.get(tok) || 0) + 1);
@@ -117,6 +119,8 @@
   function search(index, query, opts = {}) {
     const criterion = Object.assign({}, CRITERION, opts.criterion || {});
     const qTokens = [...new Set(tokenize(query))];
+    const shown = {};
+    for (const w of normalise(query).split(' ')) if (w && !STOPWORDS.has(w)) shown[stem(w)] = shown[stem(w)] || w;
     if (qTokens.length === 0) return { query, tokens: [], results: [], verdict: 'empty', criterion, corrections: [] };
 
     const resolved = resolveTokens(index, qTokens);
@@ -138,7 +142,7 @@
         const norm = tf * (K1 + 1) / (tf + K1 * (1 - B + B * d.length / index.avgLen));
         score += idf * norm * (r.fuzzy ? 0.8 : 1);
         covered += qWeight(r) * (r.fuzzy ? 0.9 : 1);
-        matched.push(r.fuzzy ? `${r.query}→${r.match}` : r.match);
+        matched.push(shown[r.query] || r.query);
       }
       if (!matched.length) continue;
       const phraseHit = qTokens.length > 0 && d.phrases.some(p => p === qPhrase || (qTokens.length > 1 && p.includes(qPhrase)) || (qPhrase.includes(p) && p.split(' ').length > 1));
@@ -190,7 +194,7 @@
         const author = firstAuthor(f);
         const cites = author && sNorm.includes(' ' + author + ' ') && sNorm.includes(' ' + f.original.year + ' ');
         if (phrase || cites) {
-          hits.push({ finding: f, how: cites ? 'cites' : 'names', evidence: cites ? `${f.original.authors.split(/[,&]/)[0].trim()} (${f.original.year})` : phrase });
+          hits.push({ finding: f, how: cites ? 'cites' : 'names', evidence: cites ? `${f.original.authors.split(/[,&]/)[0].trim()} (${f.original.year})` : d.phraseOf[phrase] });
         }
       }
       return { sentence, hits };
