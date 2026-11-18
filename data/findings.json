@@ -1133,11 +1133,14 @@
         "psychoanalysis",
         "childhood",
         "psychosexual development",
-        "parents"
+        "parents",
+        "falsifiability",
+        "unfalsifiable",
+        "sexual imprinting"
       ],
       "claim": "Young children feel sexual desire for the opposite-sex parent and rivalry with the same-sex parent.",
       "status": "untested",
-      "status_note": "Afterword found no direct empirical test. Research on how people detect siblings points the other way, and Popper used the theory as an example of an unfalsifiable claim.",
+      "status_note": "Afterword found no direct empirical test of the complex as Freud stated it. Sibling-detection research points the other way; imprinting research fits loosely but has a simpler explanation. Whether the theory can be tested at all is itself disputed (Popper vs Grünbaum).",
       "original": {
         "authors": "Freud",
         "year": 1900,
@@ -1148,6 +1151,36 @@
       },
       "replications": [
         {
+          "authors": "Popper",
+          "year": 1963,
+          "title": "Conjectures and refutations: The growth of scientific knowledge",
+          "venue": "London: Routledge & Kegan Paul (book)",
+          "doi": null,
+          "doi_checked": false,
+          "outcome": "critique",
+          "summary": "Argued that psychoanalysis as a whole (not the Oedipus complex specifically) could explain any behaviour, even opposite behaviours, so no observation could refute it."
+        },
+        {
+          "authors": "Grünbaum",
+          "year": 1984,
+          "title": "The foundations of psychoanalysis: A philosophical critique",
+          "venue": "Berkeley: University of California Press (book)",
+          "doi": null,
+          "doi_checked": false,
+          "outcome": "critique",
+          "summary": "Argued against Popper that Freud's claims are falsifiable, and that the problem is that clinical evidence, open to suggestion, gives them only weak support."
+        },
+        {
+          "authors": "Bereczkei, Gyuris & Weisfeld",
+          "year": 2004,
+          "title": "Sexual imprinting in human mate choice",
+          "venue": "Proceedings of the Royal Society B, 271(1544), 1129–1134",
+          "doi": "10.1098/rspb.2003.2672",
+          "doi_checked": true,
+          "outcome": "indirect",
+          "summary": "Adopted daughters' husbands resembled their adoptive fathers, more so when the father–daughter relationship was warm. Loosely consistent with parents shaping later desire, but says nothing about childhood rivalry and is explained by imprinting without Freud."
+        },
+        {
           "authors": "Lieberman, Tooby & Cosmides",
           "year": 2007,
           "title": "The architecture of human kin detection",
@@ -1156,19 +1189,10 @@
           "doi_checked": true,
           "outcome": "indirect",
           "summary": "Longer childhood co-residence with a sibling predicted stronger opposition to incest, consistent with Westermarck's view that growing up together reduces sexual interest. Not a direct test of Freud's claim."
-        },
-        {
-          "authors": "Popper",
-          "year": 1963,
-          "title": "Conjectures and refutations: The growth of scientific knowledge",
-          "venue": "London: Routledge & Kegan Paul (book)",
-          "doi": null,
-          "doi_checked": false,
-          "outcome": "critique",
-          "summary": "Argued that psychoanalysis could explain any behaviour, even opposite behaviours, so no observation could refute it."
         }
       ],
-      "checked": "2026-11-18"
+      "checked": "2026-11-18",
+      "contested": "Popper (1963) treated psychoanalysis in general as unfalsifiable; Grünbaum (1984) argued it is testable and that its real weakness is poor clinical evidence."
     },
     {
       "id": "shadow",

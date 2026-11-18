@@ -191,6 +191,18 @@
       "expect_top": "defence-mechanisms",
       "expect_verdict": "strong",
       "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "is the oedipus complex unfalsifiable",
+      "expect_top": "oedipus",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the Popper/Grünbaum dispute"
+    },
+    {
+      "q": "grunbaum",
+      "expect_top": null,
+      "expect_verdict": "none",
+      "note": "Design limit: only original authors are indexed, so a replication or critique author (Grünbaum) is not searchable by name. I first expected a match; the case now records the limit."
     }
   ],
   "draft": [
