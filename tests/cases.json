@@ -107,6 +107,90 @@
       "expect_top": "marshmallow",
       "expect_verdict": "strong",
       "note": "Expectation revised after first run: the marshmallow test is the correct answer."
+    },
+    {
+      "q": "oedipal complex",
+      "expect_top": "oedipus",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "shadow work",
+      "expect_top": "shadow",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "birth order personality",
+      "expect_top": "birth-order",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "MBTI",
+      "expect_top": "psychological-types",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "does venting anger help",
+      "expect_top": "catharsis",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "does CBT work for depression",
+      "expect_top": "cbt-depression",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "repressed memories",
+      "expect_top": "repression",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "hierarchy of needs",
+      "expect_top": "maslow",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "cognitive dissonance",
+      "expect_top": "cognitive-dissonance",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "learned helplessness",
+      "expect_top": "learned-helplessness",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "jungian archetypes",
+      "expect_top": "collective-unconscious",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "inferiority complex",
+      "expect_top": "inferiority-complex",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "freud",
+      "expect_top": null,
+      "expect_verdict": "ambiguous",
+      "note": "Added 18 Nov with the classic-theories entries"
+    },
+    {
+      "q": "projection denial",
+      "expect_top": "defence-mechanisms",
+      "expect_verdict": "strong",
+      "note": "Added 18 Nov with the classic-theories entries"
     }
   ],
   "draft": [
@@ -136,6 +220,13 @@
       "text": "Participants judged moral violations less harshly after washing their hands (Schnall et al., 2008).",
       "expect": [
         "cleanliness-morality"
+      ]
+    },
+    {
+      "text": "Freud (1900) argued that boys see their fathers as rivals, and Jung's shadow work helps people accept their dark side.",
+      "expect": [
+        "oedipus",
+        "shadow"
       ]
     }
   ]

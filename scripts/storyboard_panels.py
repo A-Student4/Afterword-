@@ -22,9 +22,9 @@ async def main():
         await pg.locator('article[data-id=ego-depletion]').screenshot(path=D+'1d.png')
         # SB2
         await search('growth mindset'); await pg.locator('#results').screenshot(path=D+'2a.png')
-        await search('priming'); await pg.locator('#results').screenshot(path=D+'2b.png')
-        await pg.click('button[data-open=professor-priming]'); await pg.wait_for_timeout(150)
-        await pg.locator('#results').screenshot(path=D+'2c.png')
+        await search('shadow work'); await pg.click('article[data-id=shadow] details.ev summary'); await pg.wait_for_timeout(100)
+        await pg.locator('#results article').first.screenshot(path=D+'2b.png')
+        await search('freud'); await pg.locator('#results').screenshot(path=D+'2c.png')
         # SB3
         await pg.click('#tab-draft'); await pg.wait_for_timeout(100)
         await pg.locator('#view-draft').screenshot(path=D+'3a.png')

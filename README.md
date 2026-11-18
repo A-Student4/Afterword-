@@ -1,8 +1,8 @@
 # Afterword: replication-aware search for psychology findings
 
-*README prose: about 920 words (code, commands, tables of file paths and the commit list are not counted).*
+*README prose: about 1120 words (code, commands, tables of file paths and the commit list are not counted).*
 
-Afterword lets a student or researcher look up a psychology finding by name or plain description and see, before they cite it, whether later and larger studies found the same thing. It is the developed system for Intelligent Interactive Systems Assignment 2. It continues the Assignment 1 question: does showing uncertainty at the moment of search change what readers conclude?
+Afterword lets a student or researcher look up a psychology finding or theory by name or plain description (from ego depletion to the Oedipus complex or Jung's shadow) and see, before they cite it, what later research found. It is the developed system for Intelligent Interactive Systems Assignment 2. It continues the Assignment 1 question: does showing uncertainty at the moment of search change what readers conclude?
 
 **Live demo:** open `index.html` in any browser, or enable GitHub Pages on this repository (Settings → Pages → Deploy from branch → `main` / root).
 **Submitted version:** tag `a2-submission` *(create this tag on the commit you submit)*.
@@ -11,9 +11,10 @@ Afterword lets a student or researcher look up a psychology finding by name or p
 
 | Part | State |
 |---|---|
-| Collection of 21 findings, each with original paper, replication record, outcome, one-line summary and DOI | Implemented (hand-curated, checked 17 Nov 2026) |
+| Collection of 34 entries: 21 experimental findings with replication records, and 13 classic theories (Freud, Jung, Adler, Maslow, CBT and others) with the best direct tests found or marked as having none | Implemented (hand-curated, checked 17–18 Nov 2026) |
 | Search by name or description: BM25 ranking, typo correction, match-strength decision | Implemented |
 | Response states: record card, clarify (ambiguous), weak match, decline (not covered) | Implemented |
+| Four verdicts, worded by type: replicated/supported, mixed, did not replicate/not supported, and no direct test | Implemented |
 | Dated evidence timeline and "why this matched" line on each card | Implemented |
 | Citation nudge: copying a non-replicated finding offers to add the replication | Implemented |
 | Draft checker: flags sentences that name or cite a finding; reports what it did not check | Implemented |
@@ -23,7 +24,7 @@ Afterword lets a student or researcher look up a psychology finding by name or p
 | LLM claim finder for paraphrased claims in drafts | Planned |
 | User study comparing the interface with and without badges | Planned |
 
-Known limits: the collection is small and English-only; outcome labels compress nuanced papers into three categories; 5 of 35 DOIs (Strack 1988, Bargh 1996, Dijksterhuis & van Knippenberg 1998, Shoda 1990, Stroop 1935) were not individually checked, and the interface marks them "DOI not yet checked".
+Known limits: the collection is small and English-only; outcome labels compress nuanced papers into four categories; "no direct test" means none was found in my searches, not that none exists; 6 DOIs (Strack 1988, Bargh 1996, Dijksterhuis & van Knippenberg 1998, Shoda 1990, Stroop 1935, Cristea et al. 2017) were not individually checked, and the interface marks them "DOI not yet checked". Books and chapters have no DOI and are labelled as such.
 
 ## Technology stack
 
@@ -43,7 +44,7 @@ open index.html                 # or double-click it
 # rebuild index.html after editing src/ or data/
 node scripts/build.js
 
-# run the fixed test cases (26 search and draft cases)
+# run the fixed test cases (41 search and draft cases)
 node tests/run-cases.js
 
 # optional: regenerate storyboards and the diagram PNG (needs: pip install playwright)
@@ -51,7 +52,7 @@ python3 scripts/storyboard_panels.py && python3 scripts/storyboard_compose.py
 python3 scripts/render_svg.py docs/system-diagram.svg docs/system-diagram.png 1200 820
 ```
 
-Things to try in Search: `willpower runs out` (alias match), `growth mindset` (decline), `priming` (clarify), `marshmellow test` (typo correction), then **Copy reference** on *Power posing* (citation nudge).
+Things to try in Search: `willpower runs out` (alias match), `oedipal complex` and `shadow work` (theories with no direct test), `freud` or `priming` (clarify), `growth mindset` (decline), `marshmellow test` (typo correction), then **Copy reference** on *Power posing* (citation nudge).
 
 | Path | What it is |
 |---|---|
@@ -59,7 +60,7 @@ Things to try in Search: `willpower runs out` (alias match), `growth mindset` (d
 | `src/app.template.html` | interface: layout, styles, rendering, interaction |
 | `src/search.js` | matching engine and draft checker |
 | `data/findings.json` | the collection, with `doi_checked` flags and the date checked |
-| `tests/cases.json`, `tests/run-cases.js` | fixed test cases and runner |
+| `tests/cases.json`, `tests/run-cases.js` | 41 fixed test cases and runner |
 | `docs/system-diagram.svg/.png` | system diagram |
 | `docs/storyboard-1..3.png`, `docs/panels/` | storyboards and their source screenshots |
 
@@ -78,6 +79,7 @@ Things to try in Search: `willpower runs out` (alias match), `growth mindset` (d
 5. **Interface** (`bc380bb`). This added the four response states, the evidence timeline, the "why this matched" line, the citation nudge, the draft checker and the collection view. Reviewing screenshots led to further fixes: matched words were shown as stems ("pos"); the mixed-evidence icon did not render; only some replication years were labelled; and author lists like "Vohs, Schmeichel et al." were abbreviated wrongly.
 6. **Diagram, storyboards, README.** I redrew the first diagram because its arrows crossed and the labels collided. The storyboards are built from real screenshots of the running app.
 7. **Renamed HoldsUp to Afterword** (18 Nov). The new name frames replications as the later part of a finding's story rather than as a takedown, which fits the system's calm, non-alarmist wording. I updated the code identifiers, interface text, diagram, storyboards and report; behaviour is unchanged and all 26 cases still pass.
+8. **Added classic theories** (18 Nov). I added 13 entries for Freud, Jung, Adler, Maslow, CBT, learned helplessness and cognitive dissonance. Most of these theories were never one experiment that could replicate, so I added a fourth verdict, **no direct test**, and type-specific wording ("supported" rather than "replicated" for theories). This separates two states the interface had blurred: a claim the collection doesn't cover (decline) and a claim it covers that nobody has tested. Where researchers still disagree, such as repression and the CBT decline debate, the record shows both sides. I added 15 test cases before running them; all 41 pass.
 
 ## AI assistance
 

@@ -77,15 +77,15 @@
   <!-- Data -->
   <rect x="950" y="125" width="220" height="130" rx="8" class="box"/>
   <text x="962" y="150" class="t">Findings collection</text>
-  <text x="962" y="170" class="s">data/findings.json · 21 findings</text>
-  <text x="962" y="188" class="s">original + replications, outcome,</text>
+  <text x="962" y="170" class="s">data/findings.json · 34 entries</text>
+  <text x="962" y="188" class="s">findings + theories, evidence,</text>
   <text x="962" y="205" class="s">summary, DOI + checked flag,</text>
   <text x="962" y="222" class="s">date checked</text>
   <text x="962" y="242" class="s">hand-curated, web-verified</text>
   <rect x="950" y="285" width="220" height="65" rx="8" class="plan"/>
   <text x="962" y="310" class="tp">FLoRA connector</text><text x="962" y="330" class="p">sync 4,400+ records</text>
   <rect x="950" y="380" width="220" height="62" rx="8" class="box"/>
-  <text x="962" y="405" class="t">Fixed test cases</text><text x="962" y="425" class="s">26 cases · tests/run-cases.js</text>
+  <text x="962" y="405" class="t">Fixed test cases</text><text x="962" y="425" class="s">41 cases · tests/run-cases.js</text>
   <rect x="950" y="480" width="220" height="62" rx="8" class="box"/>
   <text x="962" y="505" class="t">FLoRA Replication Atlas</text><text x="962" y="525" class="s">external site, linked</text>
   <rect x="950" y="600" width="220" height="62" rx="8" class="plan"/>
