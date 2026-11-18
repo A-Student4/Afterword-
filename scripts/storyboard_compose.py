@@ -34,7 +34,7 @@ async def main():
         for name,title,scene,panels in SB:
             cols=len(panels); width=430*cols+60
             body=''.join(f'<div class="p"><div class="d"><span class="n">{i+1}</span>{html.escape(a)}</div><img src="{img(f)}"><div class="s"><b>System:</b> {html.escape(s)}</div></div>' for i,(f,a,s) in enumerate(panels))
-            doc=f'<html><head><style>{CSS} .row{{grid-template-columns:repeat({cols},1fr)}}</style></head><body><div class="w"><h1>{html.escape(title)}</h1><p class="sc">{html.escape(scene)}</p><div class="row">{body}</div><p class="k">Screenshots of the working prototype (index.html), captured 17 Nov 2026. The user is fictional.</p></div></body></html>'
+            doc=f'<html><head><style>{CSS} .row{{grid-template-columns:repeat({cols},1fr)}}</style></head><body><div class="w"><h1>{html.escape(title)}</h1><p class="sc">{html.escape(scene)}</p><div class="row">{body}</div><p class="k">Screenshots of the working prototype (index.html), captured 18 Nov 2026. The user is fictional.</p></div></body></html>'
             pg = await b.new_page(viewport={'width': width, 'height': 200}, device_scale_factor=2)
             await pg.set_content(doc); await pg.wait_for_timeout(300)
             await pg.screenshot(path=f'docs/{name}.png', full_page=True)

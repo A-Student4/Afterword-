@@ -1,13 +1,13 @@
 /*
- * HoldsUp search engine.
+ * Afterword search engine.
  * Ranks findings with a field-weighted BM25, then decides how much to trust
  * each match. The decision rule (CRITERION) is the system's signal-detection
  * criterion: lowering it trades misses for false alarms.
- * Works in the browser (window.HoldsUpSearch) and in Node (module.exports).
+ * Works in the browser (window.AfterwordSearch) and in Node (module.exports).
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.HoldsUpSearch = factory();
+  else root.AfterwordSearch = factory();
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 

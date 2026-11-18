@@ -11,7 +11,8 @@ async def main():
         # SB1
         await pg.fill('#q', 'willpower runs out'); await pg.evaluate("document.getElementById('results').innerHTML=''")
         await pg.locator('header').evaluate("e=>e")
-        await pg.screenshot(path=D+'1a.png', clip={'x':0,'y':0,'width':720,'height':440})
+        bb = await pg.locator('#examples').bounding_box()
+        await pg.screenshot(path=D+'1a.png', clip={'x':0,'y':0,'width':720,'height':bb['y']+bb['height']+14})
         await search('willpower runs out')
         await pg.locator('#results').screenshot(path=D+'1b.png')
         await pg.click('article[data-id=ego-depletion] details.ev summary'); await pg.wait_for_timeout(150)

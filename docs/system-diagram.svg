@@ -20,7 +20,7 @@
     </style>
   </defs>
   <rect width="1200" height="820" fill="#fff"/>
-  <text x="30" y="38" font-size="22" font-weight="700" fill="#16181b">HoldsUp: system diagram</text>
+  <text x="30" y="38" font-size="22" font-weight="700" fill="#16181b">Afterword: system diagram</text>
   <text x="30" y="60" class="s">Components, information flows and AI behaviour. Everything runs in the browser; there is no server and no model call in the current version.</text>
 
   <rect x="15" y="85" width="215" height="600" rx="10" class="zone"/><text x="29" y="107" class="zt">Person</text>

@@ -1,8 +1,8 @@
-# HoldsUp: replication-aware search for psychology findings
+# Afterword: replication-aware search for psychology findings
 
 *README prose: about 920 words (code, commands, tables of file paths and the commit list are not counted).*
 
-HoldsUp lets a student or researcher look up a psychology finding by name or plain description and see, before they cite it, whether later and larger studies found the same thing. It is the developed system for Intelligent Interactive Systems Assignment 2. It continues the Assignment 1 question: does showing uncertainty at the moment of search change what readers conclude?
+Afterword lets a student or researcher look up a psychology finding by name or plain description and see, before they cite it, whether later and larger studies found the same thing. It is the developed system for Intelligent Interactive Systems Assignment 2. It continues the Assignment 1 question: does showing uncertainty at the moment of search change what readers conclude?
 
 **Live demo:** open `index.html` in any browser, or enable GitHub Pages on this repository (Settings → Pages → Deploy from branch → `main` / root).
 **Submitted version:** tag `a2-submission` *(create this tag on the commit you submit)*.
@@ -77,6 +77,7 @@ Things to try in Search: `willpower runs out` (alias match), `growth mindset` (d
    After the fixes, all 26 pass.
 5. **Interface** (`bc380bb`). This added the four response states, the evidence timeline, the "why this matched" line, the citation nudge, the draft checker and the collection view. Reviewing screenshots led to further fixes: matched words were shown as stems ("pos"); the mixed-evidence icon did not render; only some replication years were labelled; and author lists like "Vohs, Schmeichel et al." were abbreviated wrongly.
 6. **Diagram, storyboards, README.** I redrew the first diagram because its arrows crossed and the labels collided. The storyboards are built from real screenshots of the running app.
+7. **Renamed HoldsUp to Afterword** (18 Nov). The new name frames replications as the later part of a finding's story rather than as a takedown, which fits the system's calm, non-alarmist wording. I updated the code identifiers, interface text, diagram, storyboards and report; behaviour is unchanged and all 26 cases still pass.
 
 ## AI assistance
 

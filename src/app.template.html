@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HoldsUp</title>
+<title>Afterword</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -87,7 +87,7 @@ td.num{text-align:right;white-space:nowrap}
 <body>
 <div class="wrap">
   <header>
-    <h1>HoldsUp</h1>
+    <h1>Afterword</h1>
     <p class="sub">Look up a psychology finding by name or description and see whether later, larger studies found the same thing, before you cite it.</p>
     <p class="meta" id="meta"></p>
   </header>
@@ -105,13 +105,13 @@ td.num{text-align:right;white-space:nowrap}
     </form>
     <div class="chips" id="examples">Try:</div>
     <div id="results" aria-live="polite"></div>
-    <details class="note"><summary>How HoldsUp decides what counts as a match</summary>
-      <p>Each finding is scored on how much of your search it explains, weighting rare words more than common ones. A match is <b>strong</b> when it covers at least <span id="c-strong"></span>% of your search or contains a known name for the finding, and <b>weak</b> from <span id="c-weak"></span>%. Below that, HoldsUp says it found nothing rather than showing a poor guess. Lowering these thresholds would show more results but more wrong ones.</p>
+    <details class="note"><summary>How Afterword decides what counts as a match</summary>
+      <p>Each finding is scored on how much of your search it explains, weighting rare words more than common ones. A match is <b>strong</b> when it covers at least <span id="c-strong"></span>% of your search or contains a known name for the finding, and <b>weak</b> from <span id="c-weak"></span>%. Below that, Afterword says it found nothing rather than showing a poor guess. Lowering these thresholds would show more results but more wrong ones.</p>
     </details>
   </section>
 
   <section id="view-draft" hidden>
-    <p class="note" style="margin-top:20px">Paste a paragraph from an essay or report. HoldsUp marks sentences that name or cite a finding in its collection. It does not judge sentences it does not recognise.</p>
+    <p class="note" style="margin-top:20px">Paste a paragraph from an essay or report. Afterword marks sentences that name or cite a finding in its collection. It does not judge sentences it does not recognise.</p>
     <label for="draft" class="sr">Draft text</label>
     <textarea id="draft"></textarea>
     <div class="acts"><button class="btn" id="check">Check draft</button><button class="btn ghost" id="clear">Clear</button></div>
@@ -131,8 +131,8 @@ td.num{text-align:right;white-space:nowrap}
 <script>/*__SEARCH__*/</script>
 <script>
 {
-const DATA = window.HOLDSUP_DATA;
-const S = window.HoldsUpSearch;
+const DATA = window.AFTERWORD_DATA;
+const S = window.AfterwordSearch;
 const index = S.buildIndex(DATA.findings);
 const C = DATA.collection;
 const byId = Object.fromEntries(DATA.findings.map(f => [f.id, f]));
@@ -209,7 +209,7 @@ function card(f, m) {
 function declinePanel(r) {
   const words = r.unknown.length ? `<p>No finding here uses the words: <b>${r.unknown.map(esc).join(', ')}</b>.</p>` : '';
   return `<div class="notice" role="status"><h3>Nothing in this collection matches “${esc(r.query)}”.</h3>
-    <p>HoldsUp holds ${DATA.findings.length} findings, last checked ${esc(checked)}. A missing result means this collection doesn't cover the finding. It does not tell you whether the finding has been tested, or whether it held up.</p>${words}
+    <p>Afterword holds ${DATA.findings.length} findings, last checked ${esc(checked)}. A missing result means this collection doesn't cover the finding. It does not tell you whether the finding has been tested, or whether it held up.</p>${words}
     <div class="acts"><a class="btn" href="${esc(C.external_source.url)}" target="_blank" rel="noopener">Search the FLoRA Replication Atlas</a><button class="btn ghost" data-go="collection">See the ${DATA.findings.length} findings covered</button></div></div>
     ${r.below.length ? `<p class="note">Closest, but below the match threshold: ${r.below.slice(0, 3).map(b => `<button class="chip" data-open="${b.finding.id}">${esc(b.finding.name)}</button>`).join(' ')}</p>` : ''}`;
 }
@@ -246,7 +246,7 @@ function onCardAction(cardEl, act) {
   if (act === 'copy') {
     if (f.status === 'replicated') return copy(refText(f.original), 'Reference copied');
     const rep = f.replications[f.replications.length - 1];
-    slot.innerHTML = `<div class="inline"><p><b>This finding has a replication record.</b> Readers of your work may want to see it too. What should HoldsUp copy?</p>
+    slot.innerHTML = `<div class="inline"><p><b>This finding has a replication record.</b> Readers of your work may want to see it too. What should Afterword copy?</p>
       <div class="acts" style="margin-top:4px"><button class="btn small" data-act="copy-both">Original + ${esc(shortAuth(rep.authors))} (${rep.year})</button><button class="btn small ghost" data-act="copy-orig">Original only</button><button class="btn small ghost" data-act="close">Cancel</button></div></div>`;
   } else if (act === 'copy-both') {
     const rep = f.replications[f.replications.length - 1];
@@ -260,7 +260,7 @@ function onCardAction(cardEl, act) {
       <p class="note">Reports are not sent anywhere yet (planned). Copy the report and paste it into the project's issue tracker.</p></div>`;
   } else if (act === 'send') {
     const txt = slot.querySelector('textarea').value.trim();
-    copy(`HoldsUp record: ${f.id} (checked ${C.checked})\n${txt || '(no description)'}`, 'Report copied'); slot.innerHTML = '';
+    copy(`Afterword record: ${f.id} (checked ${C.checked})\n${txt || '(no description)'}`, 'Report copied'); slot.innerHTML = '';
   }
 }
 
@@ -268,7 +268,7 @@ function runDraft() {
   const r = S.checkDraft(index, $('draft').value);
   if (!r.sentences.length) { $('draft-out').innerHTML = ''; return; }
   const head = `<div class="notice" role="status"><h3>${r.flagged} of ${r.sentences.length} sentences mention a finding in this collection.</h3>
-    <p>The other ${r.unmatched} were not checked against anything. That is not a sign they are well supported: HoldsUp only knows ${DATA.findings.length} findings.</p></div>`;
+    <p>The other ${r.unmatched} were not checked against anything. That is not a sign they are well supported: Afterword only knows ${DATA.findings.length} findings.</p></div>`;
   const body = r.sentences.map(s => {
     if (!s.hits.length) return `<div class="sent"><span class="note" style="margin:0">Not recognised · </span>${esc(s.sentence)}</div>`;
     return `<div class="sent hit">${esc(s.sentence)}${s.hits.map(h => `<div class="hl">${stamp(h.finding.status)} <b>${esc(h.finding.name)}</b>: this sentence ${h.how === 'cites' ? 'cites' : 'names'} “${esc(h.evidence)}”. ${esc(h.finding.status_note)} <button class="chip" data-open="${h.finding.id}" data-go="search">Open record</button></div>`).join('')}</div>`;
