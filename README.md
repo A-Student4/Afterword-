@@ -1,6 +1,6 @@
 # Afterword: replication-aware search for psychology findings
 
-*README prose: about 1240 words (code, commands, tables of file paths and the commit list are not counted).*
+*README prose: about 1300 words (code, commands, tables of file paths and the commit list are not counted).*
 
 Afterword lets a student or researcher look up a psychology finding or theory by name or plain description (from ego depletion to the Oedipus complex or Jung's shadow) and see, before they cite it, what later research found. It is the developed system for Intelligent Interactive Systems Assignment 2. It continues the Assignment 1 question: does showing uncertainty at the moment of search change what readers conclude?
 
@@ -66,31 +66,33 @@ Things to try in Search: `willpower runs out` (alias match), `oedipal complex` a
 
 ## Development record
 
-1. **Change of domain** (before the first commit). Assignment 1 reviewed OCR-degraded newspaper archives, where readers wrongly conclude material is absent. I moved to psychology research tools because I want to build on this beyond the module. The interaction problem stayed the same: a reader draws a confident conclusion that the system's output does not support, because the system hides how far its answer can be trusted.
-2. **Prior art narrowed the claim.** While verifying data I found FORRT's FLoRA Replication Atlas, which already records replication outcomes for 4,400+ findings and has a Zotero plugin. So the contribution is not a database. It is the interaction: getting replication status in front of someone at the moment they search or cite, by phenomenon name rather than DOI, with honest behaviour when the collection has no answer.
-3. **Collection and verification** (`6addf47`). 21 findings were chosen to include failed, mixed and robust cases, so the badge is not always red. Each outcome was checked against the replication paper's own abstract or record. DOIs were checked by search, and the 5 I could not check are flagged in the data and in the interface.
-4. **Search engine and fixed cases** (`6addf47` → `694896e`). I wrote 26 test cases before tuning (Lecture 09's fixed-case loop). The first run passed 22 of 26:
+Each item says who did what. "Claude" means Claude (Anthropic), used in the Claude app; see *AI assistance*.
+
+1. **Change of domain** (my decision, before the first commit). Assignment 1 reviewed OCR-degraded newspaper archives, where readers wrongly conclude material is absent. I dropped my first plan (Gurmukhi archives) and chose psychology, because I want to build on this project beyond the module. The interaction problem stayed the same: a reader draws a confident conclusion that the system's output does not support, because the system hides how far its answer can be trusted.
+2. **Choosing the idea** (my decision). I asked Claude for project ideas in psychology or philosophy and AI, and chose replication-aware search from the options it gave.
+3. **Prior art narrowed the claim.** Claude's verification searches turned up FORRT's FLoRA Replication Atlas, which already records replication outcomes for 4,400+ findings and has a Zotero plugin. So the contribution is not a database. It is the interaction: getting replication status in front of someone at the moment they search or cite, by everyday name rather than DOI, with honest behaviour when the collection has no answer.
+4. **Collection and verification** (`6addf47`, Claude). Claude chose 21 findings to include failed, mixed and robust cases, so the badge is not always red, checked each outcome against the replication paper's abstract or record, and checked DOIs by web search. Where sources disagreed (the Mozart effect), it recorded "mixed" with a note. DOIs it could not check are flagged in the data and in the interface.
+5. **Search engine and fixed cases** (`6addf47` → `694896e`, Claude). Claude wrote 26 test cases before tuning (Lecture 09's fixed-case loop). The first run passed 22 of 26:
    - Sentence splitting broke "et al. (1998)", so citations were never detected. Fixed.
    - Filler words ("get", "used") counted as unmatched and lowered match strength. Fixed.
    - Two expectations were wrong: "self-control in children" should find the marshmallow test. Revised with a note in `cases.json`.
    - "priming" matched six findings equally. This became a new **ambiguous** state with a clarify turn, rather than a ranked list.
 
    After the fixes, all 26 pass.
-5. **Interface** (`bc380bb`). This added the four response states, the evidence timeline, the "why this matched" line, the citation nudge, the draft checker and the collection view. Reviewing screenshots led to further fixes: matched words were shown as stems ("pos"); the mixed-evidence icon did not render; only some replication years were labelled; and author lists like "Vohs, Schmeichel et al." were abbreviated wrongly.
-6. **Diagram, storyboards, README.** I redrew the first diagram because its arrows crossed and the labels collided. The storyboards are built from real screenshots of the running app.
-7. **Renamed HoldsUp to Afterword** (18 Nov). The new name frames replications as the later part of a finding's story rather than as a takedown, which fits the system's calm, non-alarmist wording. I updated the code identifiers, interface text, diagram, storyboards and report; behaviour is unchanged and all 26 cases still pass.
-8. **Added classic theories** (18 Nov). I added 13 entries for Freud, Jung, Adler, Maslow, CBT, learned helplessness and cognitive dissonance. Most of these theories were never one experiment that could replicate, so I added a fourth verdict, **no direct test**, and type-specific wording ("supported" rather than "replicated" for theories). This separates two states the interface had blurred: a claim the collection doesn't cover (decline) and a claim it covers that nobody has tested. Where researchers still disagree, such as repression and the CBT decline debate, the record shows both sides. I added 15 test cases before running them; all 41 pass.
-9. **Oedipus record corrected** (18 Nov). The record had implied Popper was the last word on whether the Oedipus complex can be tested. Popper's critique was of psychoanalysis in general, and Grünbaum (1984) argued against it that Freud's claims are testable. I added Grünbaum as a counter-critique and Bereczkei et al. (2004) on sexual imprinting as indirect evidence, and marked the record as contested. One new test case expected a search for "grunbaum" to find the record; it didn't, because only original authors are indexed. I kept that as a documented limit rather than widening the index the day before submission. 43/43 pass.
+6. **Interface** (`bc380bb`, Claude). This added the four response states, the evidence timeline, the "why this matched" line, the citation nudge, the draft checker and the collection view. Claude's screenshot review led to fixes: matched words were shown as stems ("pos"); the mixed-evidence icon did not render; only some replication years were labelled; author lists like "Vohs, Schmeichel et al." were abbreviated wrongly.
+7. **Diagram, storyboards, README** (`dd59d2e`, Claude). The first diagram was redrawn because its arrows crossed and labels collided. The storyboards are built from real screenshots of the running app.
+8. **Rename** (`b17d615`; my decision). I asked for a different name than HoldsUp and chose Afterword from Claude's suggestions. Claude updated the code, interface, diagram, storyboards and report; behaviour is unchanged and all 26 cases still pass.
+9. **Classic theories and a fourth verdict** (`980ddec`; my requirement, Claude's implementation). I asked for Freud, Jung, Adler, CBT and similar theories, so that searches like "oedipal complex" or "shadow work" return a record whether or not the theory was ever verified. That requirement showed the three-level verdict could not say "never tested", so Claude added a fourth verdict, **no direct test**, with theory-specific wording ("supported" rather than "replicated"). It separates a claim the collection doesn't cover (decline) from one it covers that nobody has tested. Contested records (repression; the CBT decline debate) show both sides. Claude wrote 15 test cases before running them; all 41 pass.
+10. **Oedipus record corrected** (`fbacb7f`; my challenge). The record said Popper used the Oedipus complex as an example of an unfalsifiable claim. I questioned that, because I thought evidence could be found for or against it. Claude checked: Popper's critique was of psychoanalysis in general, and Grünbaum (1984) argued against him that Freud's claims are testable. Claude added Grünbaum as a counter-critique and Bereczkei et al. (2004) on sexual imprinting as indirect evidence, and marked the record contested. A new test case expected a search for "grunbaum" to find the record; it didn't, because only original authors are indexed. That is kept as a documented limit rather than widening the index just before submission. 43/43 pass.
 
 ## AI assistance
 
-I used **Claude (Anthropic)** in the Claude app throughout. A few examples:
-- **Choosing and scoping the idea:** I asked for project ideas at the psychology/philosophy and AI intersection and chose replication-aware search from four options. The decision and the A1 link are mine.
-- **Data:** Claude searched the web for each finding's replication record and drafted the paraphrased summaries. I checked each outcome against the cited paper's abstract, kept the 5 unverified DOIs visibly flagged, and changed the Mozart effect from "did not replicate" to "mixed" when sources disagreed.
-- **Code:** Claude drafted `search.js`, the interface and the build script. I ran the fixed test cases and screenshot reviews; the failures and fixes are listed in the development record.
-- **Documents:** Claude drafted this README, the diagram and storyboard captions, and a first report draft, which I then reviewed and reworded.
+I used **Claude (Anthropic)** in the Claude app throughout.
 
-*Before submitting, replace or confirm these lines so they describe exactly what you checked or changed yourself.*
+- **What Claude did:** proposed project ideas and names; searched for and summarised the replication records; checked DOIs by web search; wrote `search.js`, the interface, the build script and the test cases; ran the tests and screenshot reviews; drew the diagram and storyboards; drafted this README and the report.
+- **What I decided:** the domain, the project idea, the name, the requirement that untested theories still appear, and the report's argument from my Assignment 1 review.
+- **Where I changed Claude's output:** the theories requirement (item 9) changed the verdict design; my challenge to the Oedipus record (item 10) corrected a claim Claude had written.
+- **Checks I did myself:** TODO before submitting. List only what you actually did, for example: ran `node tests/run-cases.js`; tried my own searches in `index.html`; checked the 6 flagged DOIs; compared a sample of records with the papers' abstracts; reworded the report.
 
 ## Additional files
 

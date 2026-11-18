@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" width="1200" height="820" font-family="Inter, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 840" width="1200" height="840" font-family="Inter, Helvetica, Arial, sans-serif">
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16181b"/></marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a9097"/></marker>
@@ -19,7 +19,7 @@
       .zt{font-size:13px;font-weight:600;fill:#6b7178}
     </style>
   </defs>
-  <rect width="1200" height="820" fill="#fff"/>
+  <rect width="1200" height="840" fill="#fff"/>
   <text x="30" y="38" font-size="22" font-weight="700" fill="#16181b">Afterword: system diagram</text>
   <text x="30" y="60" class="s">Components, information flows and AI behaviour. Everything runs in the browser; there is no server and no model call in the current version.</text>
 
@@ -57,7 +57,7 @@
   <text x="522" y="169" class="s">normalise, stem,</text><text x="522" y="184" class="s">drop filler words,</text><text x="522" y="199" class="s">correct typos</text>
   <rect x="740" y="125" width="170" height="85" rx="8" class="ai"/>
   <text x="752" y="149" class="t">Retriever</text>
-  <text x="752" y="169" class="s">field-weighted BM25</text><text x="752" y="184" class="s">over name, aliases,</text><text x="752" y="199" class="s">keywords, claim</text>
+  <text x="752" y="169" class="s">field-weighted BM25</text><text x="752" y="184" class="s">over name, aliases, claim,</text><text x="752" y="199" class="s">keywords, original author</text>
   <rect x="740" y="235" width="170" height="102" rx="8" class="ai"/>
   <text x="752" y="259" class="t">Match strength</text>
   <text x="752" y="279" class="s">share of query matched</text>
@@ -85,7 +85,7 @@
   <rect x="950" y="285" width="220" height="65" rx="8" class="plan"/>
   <text x="962" y="310" class="tp">FLoRA connector</text><text x="962" y="330" class="p">sync 4,400+ records</text>
   <rect x="950" y="380" width="220" height="62" rx="8" class="box"/>
-  <text x="962" y="405" class="t">Fixed test cases</text><text x="962" y="425" class="s">41 cases · tests/run-cases.js</text>
+  <text x="962" y="405" class="t">Fixed test cases</text><text x="962" y="425" class="s">43 cases · same engine, in Node</text>
   <rect x="950" y="480" width="220" height="62" rx="8" class="box"/>
   <text x="962" y="505" class="t">FLoRA Replication Atlas</text><text x="962" y="525" class="s">external site, linked</text>
   <rect x="950" y="600" width="220" height="62" rx="8" class="plan"/>
@@ -115,11 +115,12 @@
   <path class="ln" marker-end="url(#a)" d="M30 200 H22 V631 H255"/><text x="40" y="623" class="lab">corrects a record</text>
 
   <!-- Legend -->
-  <rect x="15" y="700" width="1170" height="105" rx="10" fill="#f6f7f8"/>
+  <rect x="15" y="700" width="1170" height="125" rx="10" fill="#f6f7f8"/>
   <rect x="35" y="720" width="34" height="22" rx="4" class="box"/><text x="77" y="736" class="s">Implemented</text>
   <rect x="185" y="720" width="34" height="22" rx="4" class="ai"/><text x="227" y="736" class="s">Implemented AI behaviour (retrieval, ranking, thresholding, matching)</text>
   <rect x="660" y="720" width="34" height="22" rx="4" class="sim"/><text x="702" y="736" class="s">Simulated (works, nothing is sent)</text>
   <rect x="950" y="720" width="34" height="22" rx="4" class="plan"/><text x="992" y="736" class="s">Planned</text>
   <text x="35" y="770" class="s">No component generates the verdict a user reads: every badge and sentence is filled from the stored record, so a wording error cannot change a finding's status.</text>
   <text x="35" y="790" class="s">Match strength is the system's signal-detection criterion: lowering 0.6 / 0.3 shows more results and more wrong ones.</text>
+  <text x="35" y="810" class="s">Build and test: scripts/build.js inlines the collection and the engine into one offline index.html; tests/run-cases.js loads the same search.js in Node.</text>
 </svg>
