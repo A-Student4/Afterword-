@@ -89,7 +89,7 @@
         "title": "Inhibiting and facilitating conditions of the human smile: A nonobtrusive test of the facial feedback hypothesis",
         "venue": "Journal of Personality and Social Psychology, 54(5), 768–777",
         "doi": "10.1037/0022-3514.54.5.768",
-        "doi_checked": false
+        "doi_checked": true
       },
       "replications": [
         {
@@ -188,7 +188,7 @@
         "title": "Automaticity of social behavior: Direct effects of trait construct and stereotype activation on action",
         "venue": "Journal of Personality and Social Psychology, 71(2), 230–244",
         "doi": "10.1037/0022-3514.71.2.230",
-        "doi_checked": false
+        "doi_checked": true
       },
       "replications": [
         {
@@ -231,7 +231,7 @@
         "title": "The relation between perception and behavior, or how to win a game of Trivial Pursuit",
         "venue": "Journal of Personality and Social Psychology, 74(4), 865–877",
         "doi": "10.1037/0022-3514.74.4.865",
-        "doi_checked": false
+        "doi_checked": true
       },
       "replications": [
         {
@@ -602,7 +602,7 @@
         "title": "Predicting adolescent cognitive and self-regulatory competencies from preschool delay of gratification",
         "venue": "Developmental Psychology, 26(6), 978–986",
         "doi": "10.1037/0012-1649.26.6.978",
-        "doi_checked": false
+        "doi_checked": true
       },
       "replications": [
         {
@@ -940,7 +940,7 @@
         "title": "Studies of interference in serial verbal reactions",
         "venue": "Journal of Experimental Psychology, 18(6), 643–662",
         "doi": "10.1037/h0054651",
-        "doi_checked": false
+        "doi_checked": true
       },
       "replications": [
         {
@@ -1445,7 +1445,7 @@
           "title": "The effects of cognitive behavioral therapy are not systematically falling: A revision of Johnsen and Friborg (2015)",
           "venue": "Psychological Bulletin, 143(3), 326–340",
           "doi": "10.1037/bul0000062",
-          "doi_checked": false,
+          "doi_checked": true,
           "outcome": "successful",
           "summary": "Re-analysed randomised trials only and found no reliable decline; concluded the fall was most likely spurious."
         },
